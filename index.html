@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music App</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0c1de;
+        }
+
+
+        .song-box {
+            width: 800px;
+            margin: 50px auto;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+        .song-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .song-list li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .song-list li:last-child {
+            border-bottom: none;
+        }
+        .song-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+        .play-pause-icon {
+            margin-right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .left-icons {
+            display: flex;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: #ccc;
+            margin-right: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .progress-bar-filled {
+            background-color: #fc76e5;
+            height: 5px;
+            border-radius: 10px;
+        }
+        .song-info {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .icons {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        .fa-solid {
+            margin: 0 5px;
+        }
+        #song-info {
+            margin: 0 20px;
+            order: -1;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="logo.jpg" height="50px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#home">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="song-box">
+        <h2 class="text-center">Best of Ariana Grande</h2>
+        <ul class="song-list" id="song-list">
+            <li>
+                <img class="song-image" src="covers/cover1.jpg" alt="song image">
+                <i class="fa-solid fa-play play-pause-icon" id="play-pause-icon-1"></i>
+                <span>Thank u, Next</span>
+                <audio src="songs/thanku.mp3" type="audio/mp3" id="song1-audio" preload="auto"></audio>
+            </li>
+            <li>
+                <img class="song-image" src="covers/cover4.jpg" alt="song image">
+                <i class="fa-solid fa-play play-pause-icon" id="play-pause-icon-2"></i>
+                <span>Greedy</span>
+                <audio src="songs/Greedy.mp3" type="audio/mp3" id="song2-audio" preload="auto"></audio>
+            </li>
+            <li>
+                <img class="song-image" src="covers/cover2.jpg" alt="song image">
+                <i class="fa-solid fa-play play-pause-icon" id="play-pause-icon-3"></i>
+                <span>7 Rings</span>
+                <audio src="songs/7rings.mp3" type="audio/mp3" id="song3-audio" preload="auto"></audio>
+            </li>
+            <li>
+                <img class="song-image" src="covers/cover4.jpg" alt="song image">
+                <i class="fa-solid fa-play play-pause-icon" id="play-pause-icon-4"></i>
+                <span>Side to Side</span>
+                <audio src="songs/Sidetoside.mp3" type="audio/mp3" id="song4-audio" preload="auto"></audio>
+            </li>
+            <li>
+                <img class="song-image" src="covers/cover3.jpg" alt="song image">
+                <i class="fa-solid fa-play play-pause-icon" id="play-pause-icon-5"></i>
+                <span>Bloodline</span>
+                <audio src="songs/bloodline.mp3" type="audio/mp3" id="song5-audio" preload="auto"></audio>
+            </li>
+        </ul>
+    </div>
+    <div class="controls">
+        <div id="song-info">
+            <img class="song-image" id="song-image" src="covers/cover3.jpg" alt="song image" style="width: 30px; height: 30px;">
+            <span id="song-name">No song playing</span>
+        </div>
+        <div class="left-icons">
+            <i class="fa-solid fa-backward-step" id="prev-button"></i>
+            <i class="fa-solid fa-play" id="play-pause-button"></i>
+            <i class="fa-solid fa-forward-step" id="next-button"></i>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-bar-filled" id="progress-bar-filled" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const songList = document.getElementById('song-list');
+        const songs = songList.children;
+        const progressBar = document.getElementById('progress-bar');
+        const progressBarFilled = document.getElementById('progress-bar-filled');
+        const playPauseButton = document.getElementById('play-pause-button');
+        const prevButton = document.getElementById('prev-button');
+        const nextButton = document.getElementById('next-button');
+        const songInfo = document.getElementById('song-info');
+        const songImage = document.getElementById('song-image');
+        const songName = document.getElementById('song-name');
+        let currentSong;
+        let currentSongIndex = 0;
+        let intervalId;
+        let isMouseDown = false;
+        let isPlaying = false;
+        let songsAudio = [];
+        let isDragged = false;
+
+        for (let i = 0; i < songs.length; i++) {
+            const song = songs[i];
+            const playPauseIcon = song.querySelector('.play-pause-icon');
+            const audio = song.querySelector('audio');
+            songsAudio.push(audio);
+
+            playPauseIcon.addEventListener('click', () => {
+                if (isPlaying && currentSongIndex !== i) {
+                    pauseCurrentSong();
+                }
+                playPauseSong(i);
+            });
+
+            audio.addEventListener('ended', () => {
+                pauseCurrentSong();
+                const nextSongIndex = (currentSongIndex + 1) % songs.length;
+                playPauseSong(nextSongIndex);
+            });
+        }
+
+        playPauseButton.addEventListener('click', () => {
+            if (!isPlaying) {
+                playCurrentSong();
+            } else {
+                pauseCurrentSong();
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            pauseCurrentSong();
+            const prevSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+            playPauseSong(prevSongIndex);
+        });
+
+        nextButton.addEventListener('click', () => {
+            pauseCurrentSong();
+            const nextSongIndex = (currentSongIndex + 1) % songs.length;
+            playPauseSong(nextSongIndex);
+        });
+
+        function playCurrentSong() {
+            playPauseSong(currentSongIndex);
+        }
+
+        function pauseCurrentSong() {
+            if (currentSong) {
+                currentSong.pause();
+                playPauseButton.className = 'fa-solid fa-play';
+                songs[currentSongIndex].querySelector('.play-pause-icon').className = 'fa-solid fa-play play-pause-icon';
+                clearInterval(intervalId);
+                isPlaying = false;
+            }
+        }
+
+        function playPauseSong(index) {
+            if (isPlaying && currentSongIndex === index) {
+                pauseCurrentSong();
+            } else {
+                currentSongIndex = index;
+                currentSong = songsAudio[currentSongIndex];
+                currentSong.load();
+                currentSong.play().catch((error) => {
+                    console.log(error);
+                });
+                songs[currentSongIndex].querySelector('.play-pause-icon').className = 'fa-solid fa-pause play-pause-icon';
+                playPauseButton.className = 'fa-solid fa-pause';
+                updateSongInfo();
+                intervalId = setInterval(updateProgressBar, 100);
+                isPlaying = true;
+                currentSong.volume = 0.5; // set initial volume to 50%
+            }
+        }
+
+        function updateSongInfo() {
+            if (currentSongIndex < songs.length) {
+                const song = songs[currentSongIndex];
+                songImage.src = song.querySelector('.song-image').src;
+                songName.textContent = song.querySelector('span').textContent;
+            } else {
+                songImage.src = "https://via.placeholder.com/30";
+                songName.textContent = "No song playing";
+            }
+        }
+
+        function updateProgressBar() {
+            if (currentSong) {
+                const duration = currentSong.duration;
+                const currentTime = currentSong.currentTime;
+                if (duration > 0 && currentTime > 0) {
+                    const progress = (currentTime / duration) * 100;
+                    progressBarFilled.style.width = `${progress}%`;
+                } else {
+                    progressBarFilled.style.width = `0%`;
+                }
+            }
+        }
+
+        progressBar.addEventListener('mousedown', (e) => {
+            isMouseDown = true;
+            const rect = progressBar.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            const progress = (x / width) * 100;
+            progressBarFilled.style.width = `${progress}%`;
+            if (currentSong) {
+                const duration = currentSong.duration;
+                const newTime = (progress / 100) * duration;
+                currentSong.currentTime = newTime;
+            }
+            currentSong.pause();
+        });
+
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+            if (currentSong) {
+                currentSong.play();
+            }
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isMouseDown) {
+                const rect = progressBar.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const width = rect.width;
+                const progress = (x / width) * 100;
+                if (progress >= 0 && progress <= 100) {
+                    progressBarFilled.style.width = `${progress}%`;
+                    if (currentSong) {
+                        const duration = currentSong.duration;
+                        const newTime = (progress / 100) * duration;
+                        currentSong.currentTime = newTime;
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
